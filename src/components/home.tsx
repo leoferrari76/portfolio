@@ -79,7 +79,7 @@ const Home = () => {
             Leo Ferrari
           </h1>
           <p className="text-xl md:text-5xl text-muted-foreground max-w-[700px] mb-8">
-            Product Designer Lead
+            Product Designer
             </p>
             {/* <p className="text-xl md:text-2xl text-muted-foreground max-w-[700px] mb-8">
             ncional e inovador.
