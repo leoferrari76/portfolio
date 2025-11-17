@@ -29,7 +29,7 @@ const Home = () => {
             </a>
           </nav>
           <div className="flex items-center gap-4">
-            <button>
+            <button className="md:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
