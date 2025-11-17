@@ -147,7 +147,7 @@ const Home = () => {
           </div>
           <div className="flex gap-4">
             <a
-              href="linkedin.com/in/leonardomoraesferrari" // Substitua pelo seu LinkedIn
+              href="https://www.linkedin.com/in/leonardomoraesferrari/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
