@@ -25,7 +25,7 @@ export const projects: Project[] = [
     description:
       "<p>Projeto de design da Bula Digital e BackOffice do Laboratório Aché</p>",
     detailedContent:
-      "<h2>Contexto & Desafio</h2><p>O laboratório Aché, um dos maiores do setor farmacêutico no Brasil, precisava adaptar suas bulas físicas para o ambiente digital, em cumprimento às novas normas da ANVISA, que exigem a disponibilização das bulas por meio de QR codes nas embalagens.</p>",
+      "<h3><b>Contexto & Desafio</b></h3><p>O laboratório Aché, um dos maiores do setor farmacêutico no Brasil, precisava adaptar suas bulas físicas para o ambiente digital, em cumprimento às novas normas da ANVISA, que exigem a disponibilização das bulas por meio de QR codes nas embalagens.</p>",
     role: "Product Designer",
     duration: "3 meses",
     imageUrl:
@@ -50,6 +50,7 @@ export const projects: Project[] = [
           "<p>- A criação da primeira bula digital do Aché, publicada via QR Code, com histórico completo de alterações para fins de auditoria;</p>" +
           "<p>- Um backoffice robusto e fácil de operar para o time interno do laboratório;</p>" +
           "<p>- Acessibilidade plena para todos os usuários, incluindo pessoas com deficiência.</p>" +
+          "<p>&nbsp;</p><p>&nbsp;</p>" +
           "<p>Além da entrega técnica, o sucesso seria medido por:</p>" +
           "<p>- Redução de custos com impressão de papel;</p>" +
           "<p>- Eficiência no processo de atualização de bulas (tempo de cadastro e revisão);</p>" +
