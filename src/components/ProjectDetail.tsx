@@ -17,6 +17,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Importa os estilos do Quill
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/context/AuthContext";
+import { projects as localProjects, Project as LocalProject } from "@/data/projects";
 
 interface ContentBlock {
   id: string;
@@ -25,15 +26,8 @@ interface ContentBlock {
   caption?: string; // Legenda opcional para imagens
 }
 
-interface Project {
-  id?: string;
-  title: string;
-  description: string;
+interface Project extends Omit<LocalProject, "contentBlocks"> {
   contentBlocks?: ContentBlock[]; // Usado para o conteúdo detalhado, incluindo texto e imagens
-  detailedContent?: string; // Conteúdo principal em Rich Text, pode ser usado para uma introdução longa
-  role: string;
-  duration: string;
-  imageUrl?: string; // Novo campo para imagem principal do card
 }
 
 const ProjectDetail: React.FC = () => {
@@ -141,22 +135,37 @@ const ProjectDetail: React.FC = () => {
       setLoading(false);
       return;
     }
-    const { data, error } = await supabase
-      .from('projects')
-      .select('*')
-      .eq('id', id)
-      .single();
 
-    if (error) {
-      console.error("Erro ao carregar o projeto:", error);
-      setLoading(false);
-      return;
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) {
+        console.error("Erro ao carregar o projeto do Supabase, tentando dados locais:", error);
+      }
+
+      if (data) {
+        console.log("Dados do projeto carregados do Supabase no ProjectDetail:", data);
+        setProject(data as Project);
+        setEditProjectData(data as Omit<Project, 'id'>); // Preenche os dados para edição
+        setLoading(false);
+        return;
+      }
+    } catch (e) {
+      console.error("Erro inesperado ao carregar o projeto do Supabase, tentando dados locais:", e);
     }
 
-    if (data) {
-      console.log("Dados do projeto carregados no ProjectDetail:", data);
-      setProject(data as Project);
-      setEditProjectData(data as Omit<Project, 'id'>); // Preenche os dados para edição
+    // Se chegou aqui, tenta achar o projeto nos dados locais
+    const local = localProjects.find((p) => p.id === id);
+    if (local) {
+      setProject(local as Project);
+      setEditProjectData(local as Omit<Project, "id">);
+    } else {
+      setProject(null);
+      setEditProjectData(null);
     }
     setLoading(false);
   };
@@ -274,57 +283,9 @@ const ProjectDetail: React.FC = () => {
   };
 
   const handleUpdateProject = async () => {
-    if (!id || !editProjectData || !editProjectData.title.trim()) return;
-
-    let imageUrl = editProjectData.imageUrl || "";
-    if (mainImageFile) {
-      const file = mainImageFile;
-      const originalFilename = file.name;
-      const sanitizedFilename = originalFilename
-        .normalize("NFD")
-        .replace(/[^\w.-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .replace(/^-|-$/g, '');
-      const filename = `${Date.now()}-${sanitizedFilename}`;
-      const { data, error } = await supabase.storage
-        .from('project-images')
-        .upload(filename, file);
-      if (error) {
-        console.error("Erro ao fazer upload da imagem principal do projeto:", error);
-        alert("Erro ao fazer upload da imagem principal. Por favor, tente novamente.");
-        return;
-      }
-      const { data: publicUrlData } = supabase.storage
-        .from('project-images')
-        .getPublicUrl(data.path);
-      imageUrl = publicUrlData.publicUrl;
-    }
-
-    const projectToUpdate = {
-      title: editProjectData.title,
-      description: editProjectData.description,
-      contentBlocks: editProjectData.contentBlocks,
-      detailedContent: editProjectData.detailedContent,
-      role: editProjectData.role,
-      duration: editProjectData.duration,
-      imageUrl: imageUrl,
-    };
-
-    const { error } = await supabase
-      .from("projects")
-      .update(projectToUpdate)
-      .eq("id", id);
-
-    if (error) {
-      console.error("Erro ao atualizar o projeto:", error);
-      alert("Erro ao atualizar o projeto. Por favor, tente novamente.");
-      return;
-    }
-
-    alert("Projeto atualizado com sucesso!");
-    closeEditModal();
-    fetchProject();
+    // No modo atual (dados locais em arquivo), a edição via interface não persiste.
+    // Mantemos esta função apenas para evitar bugs, mas orientamos a edição manual.
+    alert("No modo atual, os projetos são carregados de src/data/projects.ts. Edite esse arquivo para atualizar o projeto.");
   };
 
   if (loading) {
@@ -426,15 +387,7 @@ const ProjectDetail: React.FC = () => {
           </section>
         </div>
 
-        {/* Botão de edição só aparece se não estiver carregando e houver usuário */}
-        {!authLoading && user && (
-          <div className="flex justify-center mt-8">
-            <Button onClick={openEditModal} className="flex items-center gap-2">
-              <User className="h-4 w-4" />
-              Editar Projeto
-            </Button>
-          </div>
-        )}
+      {/* Modo somente leitura: edição agora é feita em src/data/projects.ts */}
       </main>
 
       {/* Edit Project Modal */}
