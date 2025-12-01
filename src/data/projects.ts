@@ -23,7 +23,7 @@ export const projects: Project[] = [
     id: "Ache",
     title: "Aché - Bula Digital / BackOffice",
     description:
-      "<p>Projeto de desig da Bula Digital e BackOffice da Aché</p>",
+      "<p>Projeto de desig da Bula Digital e BackOffice do laboratório Aché</p>",
     detailedContent:
       "<h2>Contexto & Desafio</h2><p>O laboratório Aché, um dos maiores do setor farmacêutico no Brasil, precisava adaptar suas bulas físicas para o ambiente digital, em cumprimento às novas normas da ANVISA, que exigem a disponibilização das bulas por meio de QR codes nas embalagens.</p>" +
       "<p>Nosso desafio inicial foi entender profundamente as exigências regulatórias e aplicar essas diretrizes na bula digital. Dois pontos críticos surgiram:</p>" +
