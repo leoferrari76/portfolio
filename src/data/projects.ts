@@ -88,21 +88,87 @@ export const projects: Project[] = [
   },
   {
     id: "projeto-2",
-    title: "Novo Projeto",
+    title: "Artesanal Investimentos",
     description:
-      "<p>Descrição breve do seu projeto aqui.</p>",
+      "<p>BluePrint</p>",
     detailedContent:
-      "<h2>Visão Geral</h2>" +
-      "<p>Adicione aqui o conteúdo detalhado do seu projeto. Você pode usar HTML para formatar o texto.</p>" +
-      "<h3>Desafios</h3>" +
-      "<p>Descreva os principais desafios enfrentados neste projeto.</p>" +
-      "<h3>Solução</h3>" +
-      "<p>Explique como você resolveu esses desafios.</p>",
+     "<h3><b>Contexto & Desafio</b></h3><p>A Artesanal Investimento é uma gestora de recursos com mais de 15 anos no mercado financeiro, atuando com fundos de renda variável, renda fixa e derivativos. Apesar do crescimento acelerado, muitos processos internos continuavam baseados em planilhas, e-mails e trocas informais, gerando informações fragmentadas e retrabalho.</p>",
     role: "Product Designer",
-    duration: "6 meses",
+    duration: "3 meses",
     imageUrl:
       "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&q=80",
-    contentBlocks: [],
+    contentBlocks: [
+      {
+        id: "block-1",
+        type: "text",
+        content:
+        "<p>Com o aumento da complexidade das operações, a diretoria começou a sentir a necessidade urgente de um dashboard centralizado para análise dos fundos e processos mais estruturados para a gestão de dados e relatórios.</p>" +
+        "<p>Nosso desafio foi realizar um mapeamento macro de todos os processos da empresa e entregar um **blueprint estratégico**, documentando:</p>" +
+        "<p>- Fluxos e interações entre áreas;</p>" +
+        "<p>- Pontos de atenção e gargalos;</p>" +
+        "<p>- Oportunidades de melhoria e eficiência;</p>" +
+        "<p>- Proposta inicial de arquitetura para um banco de dados centralizado.</p>" +
+        "<p>&nbsp;</p>" +
+        "<p>Além disso, foi essencial entender profundamente a complexidade do mercado financeiro, seus termos técnicos, regulamentações e particularidades.</p>" +
+        "<p>&nbsp;</p>" +
+        "<h3><b>Objetivo & Sucesso Esperado</b></h3>" +
+        "<p>Nosso objetivo era, em apenas dois meses:</p>" +
+        "<p>- Mapear os fluxos completos de criação e gestão de fundos financeiros;</p>" +
+        "<p>- Identificar oportunidades de centralização e automação;</p>" +
+        "<p>- Propor um blueprint detalhado com fluxos e arquitetura de dados;</p>" +
+        "<p>- Criar um protótipo inicial do sistema futuro, integrando regras de negócio, usabilidade e viabilidade técnica.</p>" +
+        "<p>&nbsp;</p>" +
+        "<p>O sucesso seria medido por:</p>" +
+        "<p>- Eliminação da dependência de planilhas e processos manuais;</p>" +
+        "<p>- Melhoria da comunicação entre áreas;</p>" +
+        "<p>- Definição clara de um fluxo centralizado de ponta a ponta;</p>" +
+        "<p>- Entrega de um dashboard que subsidiasse decisões estratégicas rápidas;</p>" +
+        "<p>- Estabelecimento de uma base para a criação de um sistema escalável.</p>" +
+        "<p>&nbsp;</p>" +
+        "<p>Nosso mapeamento previa que, com o novo sistema, a empresa poderia:</p>" +
+        "<p>- Reduzir significativamente o retrabalho nas áreas operacionais;</p>" +
+        "<p>- Aumentar a confiabilidade e rastreabilidade dos dados;</p>" +
+        "<p>- Ter ganhos claros de agilidade, governança e segurança.</p>" +
+        "<p>&nbsp;</p>" +
+        "<h3><b>Meu Papel no Projeto</b></h3>" +
+        "<p>Atuei como responsável pela criação do blueprint, conduzindo:</p>" +
+        "<p>- Entrevistas presenciais e remotas com stakeholders e usuários-chave;</p>" +
+        "<p>- Análise profunda dos processos atuais e identificação de gargalos;</p>" +
+        "<p>- Definição, junto ao PO, das principais oportunidades de transformação;</p>" +
+        "<p>- Criação de protótipos iniciais do novo sistema, conectando usabilidade, regras de negócio e viabilidade técnica;</p>" +
+        "<p>- Apresentação do blueprint completo para toda a empresa, promovendo alinhamento e engajamento;</p>" +
+        "<p>- Condução do discovery detalhado pós-blueprint para criação dos fluxos e telas do MVP.</p>" +
+        "<p>- Além do Blueprint criei uma visualização sistêmica dos processos internos. Esse foi um plus a mais que tomei a liberdade para criar e mostrar ao cliente.</p>" +
+        "<p>&nbsp;</p>" +
+        "<h3><b>Processo & Abordagem</b></h3>" +
+        "<p>Para garantir um mapeamento preciso, utilizamos:</p>" +
+        "<p>- Entrevistas estruturadas com as áreas operacionais, comercial, financeira e de tecnologia;</p>" +
+        "<p>- Sessões de revisão e validação colaborativa com cada área;</p>" +
+        "<p>- Workshops de cocriação com stakeholders para definir o fluxo ideal do novo sistema;</p>" +
+        "<p>- Sessões de alinhamento estratégico com a diretoria para validar o direcionamento geral;</p>" +
+        "<p>- Documentação e prototipação no Miro e Figma para tangibilizar o blueprint.</p>" +
+        "<p>&nbsp;</p>" +
+        "<h3><b>Decisões Importantes & Trade-offs</b></h3>" +
+        "<p>Inicialmente, havíamos definido (eu e PO) com o time da Artesanal que o MVP começaria pelo fluxo de cadastro inicial dos fundos de investimento.</p>" +
+        "<p>Porém, durante o processo, a diretoria decidiu mudar o recorte do MVP para outra etapa do fluxo, priorizando um ponto que, para eles, teria mais impacto imediato.</p>" +
+        "<p>Essa mudança exigiu que, em pleno andamento, fizéssemos um novo discovery micro, revendo entrevistas, fluxos e priorizações para adaptar o projeto às novas expectativas, sem perder a consistência do trabalho realizado até ali.</p>" +
+        "<p>Essa virada foi crucial para garantir que o projeto mantivesse seu valor estratégico, mesmo com mudanças internas.</p>" +
+        "<p>&nbsp;</p>" +
+        "<h3><b>Resultados</b></h3>" +
+        "<p>Apesar de termos concluído com sucesso o blueprint, o projeto não avançou para as fases seguintes por motivos internos da Artesanal, como mudança de prioridades e reestruturação.</p>" +
+        "<p>Ainda assim, o projeto teve impactos importantes durante o processo:</p>" +
+        "<p>- Trouxe visibilidade inédita sobre ineficiências operacionais;</p>" +
+        "<p>- Gerou conversas internas que antes não ocorriam entre as áreas;</p>" +
+        "<p>- Iniciou um movimento de conscientização sobre a necessidade de dados centralizados e processos digitais.</p>" +
+        "<p>&nbsp;</p>" +
+        "<p>O blueprint e o discovery detalhado ficaram como referência interna para futuras iniciativas de digitalização.</p>" +
+        "<p>&nbsp;</p>" +
+        "<h3><b>Reflexão Pessoal</b></h3>" +
+        "<p>Esse foi um dos projetos mais desafiadores da minha carreira, especialmente pelo contexto técnico e pela alta complexidade regulatória do mercado financeiro.</p>" +
+        "<p>Tive que aprender rapidamente sobre fundos de investimento, regras de compliance e estruturas de dados altamente específicas, além de lidar com um ambiente de alta pressão e mudanças constantes de escopo.</p>" +
+        "<p>Meu maior aprendizado foi a importância de construir entregas que gerem valor, mesmo quando o projeto não segue até a implementação. Além disso, ficou claro como habilidades de escuta ativa, síntese e adaptação rápida são essenciais em projetos estratégicos e de transformação digital.</p>" ,
+      }
+    ],
   },
 ];
 
