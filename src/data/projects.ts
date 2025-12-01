@@ -38,12 +38,14 @@ export const projects: Project[] = [
           "<p>Nosso desafio inicial foi entender profundamente as exigências regulatórias e aplicar essas diretrizes na bula digital. Dois pontos críticos surgiram:</p>" +
           "<p>1. Já existia um layout aprovado da bula digital, mas sem validação técnica, de usabilidade ou de viabilidade — focava apenas em atender a legislação, sem considerar a experiência real do usuário.</p>" +
           "<p>2. O processo de cadastro e atualização das bulas no ambiente digital era extremamente complexo e precisava ser redesenhado para garantir eficiência, segurança e auditabilidade.</p>" +
-          "<p></p><p></p>" +
+          "<p>&nbsp;</p><p>&nbsp;</p>" +
           "<p>Em um prazo desafiador de apenas três meses, precisávamos entregar:</p>" +
           "<p>- A nova bula digital, funcional e acessível.</p>" +
           "<p>- O backoffice para gerenciamento, cadastro e histórico de alterações.</p>" +
+          "<p>&nbsp;</p><p>&nbsp;</p>" +
           "<p>A solução final foi uma bula digital moderna, intuitiva e completamente compatível com as normas da ANVISA, além de um backoffice robusto e seguro para gerenciar todo o processo de cadastro e atualização das bulas.</p>" +
-          "<h3>Objetivo e Sucesso Esperado</h3>" +
+          "<p>&nbsp;</p><p>&nbsp;</p>" +
+          "<h3><b>Objetivo e Sucesso Esperado</b></h3>" +
           "<p>Nosso objetivo era redesenhar a bula digital com foco em usabilidade, viabilidade técnica e aderência às regras da ANVISA, garantindo:</p>" +
           "<p>- A criação da primeira bula digital do Aché, publicada via QR Code, com histórico completo de alterações para fins de auditoria;</p>" +
           "<p>- Um backoffice robusto e fácil de operar para o time interno do laboratório;</p>" +
