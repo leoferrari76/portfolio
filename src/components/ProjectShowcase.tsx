@@ -45,6 +45,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/context/AuthContext";
+import { projects as localProjects, Project as LocalProject } from "@/data/projects";
 
 interface ContentBlock {
   id: string;
@@ -53,14 +54,8 @@ interface ContentBlock {
   caption?: string; // Legenda opcional para imagens
 }
 
-interface Project {
-  id?: string;
-  title: string;
-  description: string;
+interface Project extends Omit<LocalProject, "contentBlocks"> {
   contentBlocks?: ContentBlock[]; // Usado para o conteúdo detalhado, incluindo texto e imagens
-  detailedContent?: string; // Conteúdo principal em Rich Text, pode ser usado para uma introdução longa
-  role: string;
-  duration: string;
 }
 
 interface ProjectShowcaseProps {
@@ -69,7 +64,7 @@ interface ProjectShowcaseProps {
 
 const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
   const [expandedProject, setExpandedProject] = useState<string | null>(null);
-  const [projectsList, setProjectsList] = useState<Project[]>([]); // Muda de companiesList para projectsList
+  const [projectsList, setProjectsList] = useState<Project[]>([]); // Lista exibida na tela
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newProjectData, setNewProjectData] = useState<Omit<Project, 'id'> & { tempImageFile: File | null }>({ // Adiciona tempImageFile para o upload da imagem principal do card
     title: "",
@@ -170,18 +165,29 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
     }
   }, []);
 
-  // Efeito para carregar projetos do Supabase na montagem do componente
+  // Efeito para carregar projetos do Supabase na montagem do componente.
+  // Se o Supabase falhar (como no caso do projeto corrompido), fazemos fallback
+  // para os dados locais em src/data/projects.ts, para você não ficar sem nada.
   useEffect(() => {
     const fetchProjects = async () => {
-      const { data, error } = await supabase.from('projects').select('*');
+      try {
+        const { data, error } = await supabase.from('projects').select('*');
 
-      if (error) {
-        console.error("Erro ao carregar projetos do Supabase:", error);
-        return;
-      }
+        if (error) {
+          console.error("Erro ao carregar projetos do Supabase, usando dados locais:", error);
+          setProjectsList(localProjects as Project[]);
+          return;
+        }
 
-      if (data) {
-        setProjectsList(data as Project[]); // Define diretamente a lista de projetos
+        if (data && data.length > 0) {
+          setProjectsList(data as Project[]);
+        } else {
+          // Se o banco estiver vazio, usamos os dados locais como base inicial.
+          setProjectsList(localProjects as Project[]);
+        }
+      } catch (e) {
+        console.error("Erro inesperado ao carregar projetos, usando dados locais:", e);
+        setProjectsList(localProjects as Project[]);
       }
     };
     fetchProjects();
@@ -317,30 +323,47 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
       ...(imageUrl && { imageUrl: imageUrl }) as Partial<Project> // Usar Partial<Project> para adicionar imageUrl
     };
 
-    const { data, error } = await supabase.from('projects').insert([projectToSave]).select();
+    // Se o Supabase estiver funcionando, continuamos salvando lá.
+    // Caso contrário, apenas adicionamos o projeto na lista em memória (não persiste,
+    // mas evita quebrar a interface enquanto você ainda não recriou o banco).
+    try {
+      const { data, error } = await supabase.from('projects').insert([projectToSave]).select();
 
-    if (error) {
-      console.error("Erro ao salvar o projeto no Supabase:", error);
-      alert("Erro ao salvar o projeto. Por favor, tente novamente.");
-      return;
+      if (error) {
+        console.error("Erro ao salvar o projeto no Supabase. O projeto será apenas exibido localmente nesta sessão:", error);
+        const tempProject: Project = {
+          ...(projectToSave as Project),
+          id: `temp-${Date.now()}`,
+        };
+        setProjectsList((prev) => [...prev, tempProject]);
+      } else {
+        const savedProject = data[0];
+        setProjectsList((prev) => [...prev, savedProject]); // Adiciona diretamente à lista de projetos
+      }
+    } catch (e) {
+      console.error("Erro inesperado ao salvar o projeto. Ele será apenas exibido localmente nesta sessão:", e);
+      const tempProject: Project = {
+        ...(projectToSave as Project),
+        id: `temp-${Date.now()}`,
+      };
+      setProjectsList((prev) => [...prev, tempProject]);
     }
-
-    const savedProject = data[0];
-
-    setProjectsList((prev) => [...prev, savedProject]); // Adiciona diretamente à lista de projetos
 
     closeModal();
   };
 
   const deleteProject = async (projectId: string) => {
-    const { error } = await supabase.from('projects').delete().eq('id', projectId);
+    try {
+      const { error } = await supabase.from('projects').delete().eq('id', projectId);
 
-    if (error) {
-      console.error("Erro ao deletar o projeto do Supabase:", error);
-      alert("Erro ao deletar o projeto. Por favor, tente novamente.");
-      return;
+      if (error) {
+        console.error("Erro ao deletar o projeto do Supabase. O projeto será removido apenas da lista atual:", error);
+      }
+    } catch (e) {
+      console.error("Erro inesperado ao tentar deletar o projeto no Supabase. Ele será removido apenas da lista atual:", e);
     }
 
+    // Em qualquer caso, removemos da lista exibida.
     setProjectsList((prev) => prev.filter((p) => p.id !== projectId));
   };
 
