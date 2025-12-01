@@ -136,6 +136,17 @@ const ProjectDetail: React.FC = () => {
       return;
     }
 
+    // Primeiro tenta buscar nos dados locais (mais rápido e confiável)
+    const local = localProjects.find((p) => p.id === id);
+    if (local) {
+      console.log("Projeto encontrado nos dados locais:", local);
+      setProject(local as Project);
+      setEditProjectData(local as Omit<Project, "id">);
+      setLoading(false);
+      return;
+    }
+
+    // Se não encontrou localmente, tenta buscar no Supabase (fallback)
     try {
       const { data, error } = await supabase
         .from('projects')
@@ -144,26 +155,23 @@ const ProjectDetail: React.FC = () => {
         .single();
 
       if (error) {
-        console.error("Erro ao carregar o projeto do Supabase, tentando dados locais:", error);
-      }
-
-      if (data) {
-        console.log("Dados do projeto carregados do Supabase no ProjectDetail:", data);
-        setProject(data as Project);
-        setEditProjectData(data as Omit<Project, 'id'>); // Preenche os dados para edição
+        console.error("Erro ao carregar o projeto do Supabase:", error);
+        setProject(null);
+        setEditProjectData(null);
         setLoading(false);
         return;
       }
-    } catch (e) {
-      console.error("Erro inesperado ao carregar o projeto do Supabase, tentando dados locais:", e);
-    }
 
-    // Se chegou aqui, tenta achar o projeto nos dados locais
-    const local = localProjects.find((p) => p.id === id);
-    if (local) {
-      setProject(local as Project);
-      setEditProjectData(local as Omit<Project, "id">);
-    } else {
+      if (data) {
+        console.log("Dados do projeto carregados do Supabase:", data);
+        setProject(data as Project);
+        setEditProjectData(data as Omit<Project, 'id'>);
+      } else {
+        setProject(null);
+        setEditProjectData(null);
+      }
+    } catch (e) {
+      console.error("Erro inesperado ao carregar o projeto:", e);
       setProject(null);
       setEditProjectData(null);
     }
@@ -358,6 +366,16 @@ const ProjectDetail: React.FC = () => {
             </div>
           </div>
 
+          {project.imageUrl && (
+            <div className="mb-8">
+              <img
+                src={project.imageUrl}
+                alt={project.title}
+                className="w-full h-auto rounded-lg object-cover"
+              />
+            </div>
+          )}
+
           <div
             className="prose max-w-none mb-8"
             dangerouslySetInnerHTML={{ __html: project.description }}
@@ -377,11 +395,30 @@ const ProjectDetail: React.FC = () => {
 
             {project.contentBlocks && project.contentBlocks.length > 0 && (
               <div className="space-y-6">
-                {project.contentBlocks.filter(b => b.type === 'text').map(block => (
-                  <div key={block.id} className="prose max-w-none pr-4 bg-card rounded-lg border-0">
-                    <div dangerouslySetInnerHTML={{ __html: block.content }} />
-                  </div>
-                ))}
+                {project.contentBlocks.map(block => {
+                  if (block.type === 'text') {
+                    return (
+                      <div key={block.id} className="prose max-w-none pr-4 bg-card rounded-lg border-0 p-4">
+                        <div dangerouslySetInnerHTML={{ __html: block.content }} />
+                      </div>
+                    );
+                  } else if (block.type === 'image') {
+                    return (
+                      <div key={block.id} className="w-full">
+                        <img
+                          src={block.content}
+                          alt={block.caption || "Imagem do projeto"}
+                          className="w-full h-auto rounded-lg cursor-pointer"
+                          onClick={() => openImageModal(block.content)}
+                        />
+                        {block.caption && (
+                          <p className="text-sm text-muted-foreground mt-2 text-center">{block.caption}</p>
+                        )}
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
               </div>
             )}
           </section>
