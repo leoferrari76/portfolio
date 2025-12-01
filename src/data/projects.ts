@@ -46,6 +46,24 @@ export const projects: Project[] = [
       },
     ],
   },
+  {
+    id: "projeto-2",
+    title: "Novo Projeto",
+    description:
+      "<p>Descrição breve do seu projeto aqui.</p>",
+    detailedContent:
+      "<h2>Visão Geral</h2>" +
+      "<p>Adicione aqui o conteúdo detalhado do seu projeto. Você pode usar HTML para formatar o texto.</p>" +
+      "<h3>Desafios</h3>" +
+      "<p>Descreva os principais desafios enfrentados neste projeto.</p>" +
+      "<h3>Solução</h3>" +
+      "<p>Explique como você resolveu esses desafios.</p>",
+    role: "Product Designer",
+    duration: "6 meses",
+    imageUrl:
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&q=80",
+    contentBlocks: [],
+  },
 ];
 
 

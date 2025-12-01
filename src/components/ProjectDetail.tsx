@@ -366,16 +366,6 @@ const ProjectDetail: React.FC = () => {
             </div>
           </div>
 
-          {project.imageUrl && (
-            <div className="mb-8">
-              <img
-                src={project.imageUrl}
-                alt={project.title}
-                className="w-full h-auto rounded-lg object-cover"
-              />
-            </div>
-          )}
-
           <div
             className="prose max-w-none mb-8"
             dangerouslySetInnerHTML={{ __html: project.description }}
