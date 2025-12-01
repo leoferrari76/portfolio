@@ -42,8 +42,19 @@ export const projects: Project[] = [
           "<p>Em um prazo desafiador de apenas três meses, precisávamos entregar:</p>" +
           "<p>- A nova bula digital, funcional e acessível.</p>" +
           "<p>- O backoffice para gerenciamento, cadastro e histórico de alterações.</p>" +
-          "<p>A solução final foi uma bula digital moderna, intuitiva e completamente compatível com as normas da ANVISA, além de um backoffice robusto e seguro para gerenciar todo o processo de cadastro e atualização das bulas.</p>",
-      },
+          "<p>A solução final foi uma bula digital moderna, intuitiva e completamente compatível com as normas da ANVISA, além de um backoffice robusto e seguro para gerenciar todo o processo de cadastro e atualização das bulas.</p>" +
+          "<h3>Objetivo e Sucesso Esperado</h3>" +
+          "<p>Nosso objetivo era redesenhar a bula digital com foco em usabilidade, viabilidade técnica e aderência às regras da ANVISA, garantindo:</p>" +
+          "<p>- A criação da primeira bula digital do Aché, publicada via QR Code, com histórico completo de alterações para fins de auditoria;</p>" +
+          "<p>- Um backoffice robusto e fácil de operar para o time interno do laboratório;</p>" +
+          "<p>- Acessibilidade plena para todos os usuários, incluindo pessoas com deficiência.</p>" +
+          "<p>Além da entrega técnica, o sucesso seria medido por:</p>" +
+          "<p>- Redução de custos com impressão de papel;</p>" +
+          "<p>- Eficiência no processo de atualização de bulas (tempo de cadastro e revisão);</p>" +
+          "<p>- Acessibilidade garantida conforme exigências legais e melhores práticas.</p>" +
+          "<p></p><p></p>" +
+          "<p>Com base no estudo de fluxo, estimamos que a solução poderia reduzir em até 50% o tempo de atualização e revisão de bulas digitais no médio prazo, além de ampliar significativamente o acesso para pessoas com deficiência visual e idosos.</p>",
+        },
     ],
   },
   {
