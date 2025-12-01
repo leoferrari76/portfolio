@@ -372,19 +372,15 @@ const ProjectDetail: React.FC = () => {
           />
 
           {/* Detailed Content Section (Behance-like) */}
-          <section className="space-y-8 mt-12">
+          <section className="space-y-6 mt-12">
             {project.detailedContent && (
-              <div className="space-y-4">
-                <h2 className="text-3xl font-bold mb-4">Visão Geral do Projeto</h2>
-                <div
-                  className="prose max-w-none"
-                  dangerouslySetInnerHTML={{ __html: project.detailedContent }}
-                />
+              <div className="prose max-w-none pr-4 bg-card rounded-lg border-0 p-4">
+                <div dangerouslySetInnerHTML={{ __html: project.detailedContent }} />
               </div>
             )}
 
             {project.contentBlocks && project.contentBlocks.length > 0 && (
-              <div className="space-y-6">
+              <>
                 {project.contentBlocks.map(block => {
                   if (block.type === 'text') {
                     return (
@@ -409,7 +405,7 @@ const ProjectDetail: React.FC = () => {
                   }
                   return null;
                 })}
-              </div>
+              </>
             )}
           </section>
         </div>
