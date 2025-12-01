@@ -38,6 +38,7 @@ export const projects: Project[] = [
           "<p>Nosso desafio inicial foi entender profundamente as exigências regulatórias e aplicar essas diretrizes na bula digital. Dois pontos críticos surgiram:</p>" +
           "<p>1. Já existia um layout aprovado da bula digital, mas sem validação técnica, de usabilidade ou de viabilidade — focava apenas em atender a legislação, sem considerar a experiência real do usuário.</p>" +
           "<p>2. O processo de cadastro e atualização das bulas no ambiente digital era extremamente complexo e precisava ser redesenhado para garantir eficiência, segurança e auditabilidade.</p>" +
+          "<p></p><p></p>" +
           "<p>Em um prazo desafiador de apenas três meses, precisávamos entregar:</p>" +
           "<p>- A nova bula digital, funcional e acessível.</p>" +
           "<p>- O backoffice para gerenciamento, cadastro e histórico de alterações.</p>" +
