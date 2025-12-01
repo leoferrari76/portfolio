@@ -79,7 +79,7 @@ export const projects: Project[] = [
           "<p>&nbsp;</p>" +
           "<p>Embora não tenha sido possível coletar feedbacks de usuários finais (o medicamento era de uso muito restrito), o projeto estabeleceu um novo padrão de operação dentro do laboratório.</p>" +
           "<p>&nbsp;</p>" +
-          "<h3><b>Resultados</b></h3>" +
+          "<h3><b>Aprendizados & Conclusões</b></h3>" +
           "<p>Este projeto reforçou um aprendizado importante: como um time alinhado e um cliente participativo podem acelerar entregas de alta complexidade, mesmo com restrições regulatórias rígidas.</p>" +
           "<p>Além disso, me desafiou a equilibrar estética, usabilidade, acessibilidade e viabilidade técnica — algo que considero uma das habilidades mais críticas em projetos digitais de impacto social.</p>" +
           "<p>O projeto também me mostrou como decisões bem fundamentadas, mesmo impopulares no início (como o corte de features), podem salvar um projeto e garantir uma entrega que atende tanto aos usuários quanto às exigências do negócio.</p>",
