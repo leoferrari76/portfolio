@@ -38,11 +38,11 @@ export const projects: Project[] = [
           "<p>Nosso desafio inicial foi entender profundamente as exigências regulatórias e aplicar essas diretrizes na bula digital. Dois pontos críticos surgiram:</p>" +
           "<p>1. Já existia um layout aprovado da bula digital, mas sem validação técnica, de usabilidade ou de viabilidade — focava apenas em atender a legislação, sem considerar a experiência real do usuário.</p>" +
           "<p>2. O processo de cadastro e atualização das bulas no ambiente digital era extremamente complexo e precisava ser redesenhado para garantir eficiência, segurança e auditabilidade.</p>" +
-          "<p>&nbsp;</p><p>&nbsp;</p>" +
+          "<p>&nbsp;</p>" +
           "<p>Em um prazo desafiador de apenas três meses, precisávamos entregar:</p>" +
           "<p>- A nova bula digital, funcional e acessível.</p>" +
           "<p>- O backoffice para gerenciamento, cadastro e histórico de alterações.</p>" +
-          "<p>&nbsp;</p><p>&nbsp;</p>" +
+          "<p>&nbsp;</p>" +
           "<p>A solução final foi uma bula digital moderna, intuitiva e completamente compatível com as normas da ANVISA, além de um backoffice robusto e seguro para gerenciar todo o processo de cadastro e atualização das bulas.</p>" +
           "<p>&nbsp;</p><p>&nbsp;</p>" +
           "<h3><b>Objetivo e Sucesso Esperado</b></h3>" +
@@ -50,12 +50,12 @@ export const projects: Project[] = [
           "<p>- A criação da primeira bula digital do Aché, publicada via QR Code, com histórico completo de alterações para fins de auditoria;</p>" +
           "<p>- Um backoffice robusto e fácil de operar para o time interno do laboratório;</p>" +
           "<p>- Acessibilidade plena para todos os usuários, incluindo pessoas com deficiência.</p>" +
-          "<p>&nbsp;</p><p>&nbsp;</p>" +
+          "<p>&nbsp;</p>" +
           "<p>Além da entrega técnica, o sucesso seria medido por:</p>" +
           "<p>- Redução de custos com impressão de papel;</p>" +
           "<p>- Eficiência no processo de atualização de bulas (tempo de cadastro e revisão);</p>" +
           "<p>- Acessibilidade garantida conforme exigências legais e melhores práticas.</p>" +
-          "<p>&nbsp;</p><p>&nbsp;</p>" +
+          "<p>&nbsp;</p>" +
           "<p>Com base no estudo de fluxo, estimamos que a solução poderia reduzir em até 50% o tempo de atualização e revisão de bulas digitais no médio prazo, além de ampliar significativamente o acesso para pessoas com deficiência visual e idosos.</p>",
         },
     ],
