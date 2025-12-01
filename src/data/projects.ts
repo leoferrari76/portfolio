@@ -52,7 +52,7 @@ export const projects: Project[] = [
           "<p>- Redução de custos com impressão de papel;</p>" +
           "<p>- Eficiência no processo de atualização de bulas (tempo de cadastro e revisão);</p>" +
           "<p>- Acessibilidade garantida conforme exigências legais e melhores práticas.</p>" +
-          "<p></p><p></p>" +
+          "<p>&nbsp;</p><p>&nbsp;</p>" +
           "<p>Com base no estudo de fluxo, estimamos que a solução poderia reduzir em até 50% o tempo de atualização e revisão de bulas digitais no médio prazo, além de ampliar significativamente o acesso para pessoas com deficiência visual e idosos.</p>",
         },
     ],
