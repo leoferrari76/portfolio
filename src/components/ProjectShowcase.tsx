@@ -167,29 +167,40 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
 
   // Efeito para carregar projetos do Supabase na montagem do componente.
   // Se o Supabase falhar (como no caso do projeto corrompido), fazemos fallback
-  // para os dados locais em src/data/projects.ts, para você não ficar sem nada.
+  // Carrega os projetos: primeiro usa dados locais, depois tenta atualizar do Supabase se disponível
   useEffect(() => {
+    // Define os dados locais imediatamente para garantir que apareçam
+    setProjectsList(localProjects as Project[]);
+
+    // Tenta buscar do Supabase em background (opcional)
     const fetchProjects = async () => {
       try {
+        // Verifica se temos credenciais do Supabase válidas
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        
+        if (!supabaseUrl || !supabaseKey || supabaseUrl === 'https://placeholder.supabase.co') {
+          // Sem credenciais válidas, mantém os dados locais
+          return;
+        }
+
         const { data, error } = await supabase.from('projects').select('*');
 
         if (error) {
           console.error("Erro ao carregar projetos do Supabase, usando dados locais:", error);
-          setProjectsList(localProjects as Project[]);
-          return;
+          return; // Mantém os dados locais já definidos
         }
 
         if (data && data.length > 0) {
+          // Se encontrou dados no Supabase, atualiza a lista
           setProjectsList(data as Project[]);
-        } else {
-          // Se o banco estiver vazio, usamos os dados locais como base inicial.
-          setProjectsList(localProjects as Project[]);
         }
       } catch (e) {
-        console.error("Erro inesperado ao carregar projetos, usando dados locais:", e);
-        setProjectsList(localProjects as Project[]);
+        console.error("Erro inesperado ao carregar projetos do Supabase:", e);
+        // Mantém os dados locais já definidos
       }
     };
+    
     fetchProjects();
   }, []);
 
