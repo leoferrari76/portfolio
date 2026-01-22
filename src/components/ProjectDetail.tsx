@@ -17,7 +17,9 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Importa os estilos do Quill
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { projects as localProjects, Project as LocalProject } from "@/data/projects";
+import { translateProject } from "@/data/projectsTranslations";
 
 interface ContentBlock {
   id: string;
@@ -40,6 +42,7 @@ const ProjectDetail: React.FC = () => {
     Omit<Project, "id"> | null
   >(null);
   const { user, loading: authLoading } = useAuth();
+  const { t, language } = useLanguage();
   const [currentEditTextBlock, setCurrentEditTextBlock] = useState(""); // Novo estado para adicionar blocos de texto
   const [newImageBlockUrl, setNewImageBlockUrl] = useState(""); // Novo estado para a URL da imagem a ser adicionada
   const imageInputRef = React.useRef<HTMLInputElement>(null); // Referência para o input de arquivo de imagem
@@ -140,8 +143,9 @@ const ProjectDetail: React.FC = () => {
     const local = localProjects.find((p) => p.id === id);
     if (local) {
       console.log("Projeto encontrado nos dados locais:", local);
-      setProject(local as Project);
-      setEditProjectData(local as Omit<Project, "id">);
+      const translatedProject = translateProject(local as Project, language);
+      setProject(translatedProject);
+      setEditProjectData(translatedProject as Omit<Project, "id">);
       setLoading(false);
       return;
     }
@@ -164,8 +168,9 @@ const ProjectDetail: React.FC = () => {
 
       if (data) {
         console.log("Dados do projeto carregados do Supabase:", data);
-        setProject(data as Project);
-        setEditProjectData(data as Omit<Project, 'id'>);
+        const translatedProject = translateProject(data as Project, language);
+        setProject(translatedProject);
+        setEditProjectData(translatedProject as Omit<Project, 'id'>);
       } else {
         setProject(null);
         setEditProjectData(null);
@@ -185,7 +190,7 @@ const ProjectDetail: React.FC = () => {
     if (quill) {
       quill.getModule('toolbar').addHandler('image', imageHandler);
     }
-  }, [id]);
+  }, [id, language]);
 
   const openEditModal = () => {
     if (project) {
@@ -299,7 +304,7 @@ const ProjectDetail: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <p>Carregando projeto...</p>
+        <p>{t('projectDetail.loading')}</p>
       </div>
     );
   }
@@ -308,13 +313,13 @@ const ProjectDetail: React.FC = () => {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Projeto não encontrado</h1>
+          <h1 className="text-2xl font-bold mb-4">{t('projectDetail.projectNotFound')}</h1>
           <Button
             onClick={() => navigate("/")}
             className="flex items-center gap-2"
           >
             <ArrowLeft className="h-4 w-4" />
-            Voltar ao Início
+            {t('projectDetail.backToHome')}
           </Button>
         </div>
       </div>
@@ -332,7 +337,7 @@ const ProjectDetail: React.FC = () => {
             className="flex items-center gap-2"
           >
             <ArrowLeft className="h-4 w-4" />
-            Voltar
+            {t('projectDetail.back')}
           </Button>
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
@@ -417,7 +422,7 @@ const ProjectDetail: React.FC = () => {
       <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Editar Projeto</DialogTitle>
+            <DialogTitle>{t('projectDetail.editProject')}</DialogTitle>
           </DialogHeader>
           {editProjectData && (
             <div className="space-y-6 py-4">
@@ -550,7 +555,7 @@ const ProjectDetail: React.FC = () => {
 
               {/* Image Principal do Card */}
               <div className="space-y-2">
-                <Label>Imagem Principal do Card</Label>
+                <Label>{t('projectDetail.currentCardImage')}</Label>
                 {editProjectData.imageUrl && (
                   <img
                     src={editProjectData.imageUrl}
@@ -574,9 +579,9 @@ const ProjectDetail: React.FC = () => {
           )}
           <DialogFooter>
             <Button variant="outline" onClick={closeEditModal}>
-              Cancelar
+              {t('projects.cancel')}
             </Button>
-            <Button onClick={handleUpdateProject}>Salvar Alterações</Button>
+            <Button onClick={handleUpdateProject}>{t('projectDetail.saveChanges')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

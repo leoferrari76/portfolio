@@ -45,7 +45,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { projects as localProjects, Project as LocalProject } from "@/data/projects";
+import { translateProjects } from "@/data/projectsTranslations";
 
 interface ContentBlock {
   id: string;
@@ -81,6 +83,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
 
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t, language } = useLanguage();
 
   const quillModules = {
     toolbar: [
@@ -169,8 +172,8 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
   // Se o Supabase falhar (como no caso do projeto corrompido), fazemos fallback
   // Carrega os projetos: primeiro usa dados locais, depois tenta atualizar do Supabase se disponível
   useEffect(() => {
-    // Define os dados locais imediatamente para garantir que apareçam
-    setProjectsList(localProjects as Project[]);
+    // Define os dados locais imediatamente para garantir que apareçam, traduzidos
+    setProjectsList(translateProjects(localProjects as Project[], language));
 
     // Tenta buscar do Supabase em background (opcional)
     const fetchProjects = async () => {
@@ -192,8 +195,8 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
         }
 
         if (data && data.length > 0) {
-          // Se encontrou dados no Supabase, atualiza a lista
-          setProjectsList(data as Project[]);
+          // Se encontrou dados no Supabase, atualiza a lista traduzida
+          setProjectsList(translateProjects(data as Project[], language));
         }
       } catch (e) {
         console.error("Erro inesperado ao carregar projetos do Supabase:", e);
@@ -202,7 +205,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
     };
     
     fetchProjects();
-  }, []);
+  }, [language]);
 
   const toggleProjectExpansion = (projectId: string) => {
     setExpandedProject(expandedProject === projectId ? null : projectId);
@@ -388,14 +391,14 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
               className="flex items-center gap-2"
             >
               <Plus className="h-4 w-4" />
-              Adicionar Projeto
+              {t('projects.addProject')}
             </Button>
           </div>
         )}
 
         <div className="space-y-12">
           {projectsList.length === 0 ? (
-            <p className="text-center text-muted-foreground">Nenhum projeto adicionado ainda. Clique em "Adicionar Projeto" para começar!</p>
+            <p className="text-center text-muted-foreground">{t('projects.noProjects')}</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {projectsList.map((project) => {
@@ -436,7 +439,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
                           navigate(`/project/${project.id}`);
                         }}
                       >
-                        Ver Detalhes
+                        {t('projects.viewDetails')}
                       </Button>
                     </div>
                   </Card>
@@ -450,15 +453,15 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>Adicionar Novo Projeto</DialogTitle>
+              <DialogTitle>{t('projects.addNewProject')}</DialogTitle>
               <DialogDescription>
-                Preencha os dados do novo projeto.
+                {t('projects.fillProjectData')}
               </DialogDescription>
             </DialogHeader>
 
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="title">Título do Projeto *</Label>
+                <Label htmlFor="title">{t('projects.projectTitle')}</Label>
                 <Input
                   id="title"
                   value={newProjectData.title}
@@ -468,12 +471,12 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
                       title: e.target.value,
                     }))
                   }
-                  placeholder="Ex: Redesign de E-commerce"
+                  placeholder={t('projects.projectTitlePlaceholder')}
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="main-image">Imagem Principal do Projeto (para o card)</Label>
+                <Label htmlFor="main-image">{t('projects.mainImage')}</Label>
                 <Input
                   id="main-image"
                   type="file"
@@ -483,13 +486,13 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
                 />
                 {newProjectData.tempImageFile && (
                   <p className="text-sm text-muted-foreground mt-1">
-                    Arquivo selecionado: {newProjectData.tempImageFile.name}
+                    {t('projects.fileSelected')} {newProjectData.tempImageFile.name}
                   </p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description">Descrição Breve</Label>
+                <Label htmlFor="description">{t('projects.briefDescription')}</Label>
                 <ReactQuill
                   theme="snow"
                   value={newProjectData.description}
@@ -506,7 +509,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
               {/* Detailed Content (Rich Text) */}
               <div className="space-y-2">
                 <Label htmlFor="detailed-content">
-                  Conteúdo Detalhado do Projeto (Processo, Resultados, etc.)
+                  {t('projects.detailedContent')}
                 </Label>
                 <ReactQuill
                   theme="snow"
@@ -517,7 +520,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
                       detailedContent: content,
                     }))
                   }
-                  placeholder="Adicione o conteúdo detalhado do projeto, explicando o processo, desafios e soluções..."
+                  placeholder={t('projects.detailedContentPlaceholder')}
                   className="min-h-[200px]"
                   modules={quillModulesForDetailedContent}
                   formats={quillFormatsForDetailedContent}
@@ -526,7 +529,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
 
               {/* Content Blocks (Text and Images) */}
               <div className="space-y-4">
-                <Label>Blocos de Conteúdo Adicionais (Imagens e Texto)</Label>
+                <Label>{t('projects.contentBlocks')}</Label>
                 <div className="space-y-3">
                   {newProjectData.contentBlocks.length > 0 ? (
                     newProjectData.contentBlocks.map((block) => (
@@ -556,16 +559,16 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
                       </div>
                     ))
                   ) : (
-                    <p className="text-sm text-muted-foreground">Nenhum bloco de conteúdo adicionado ainda.</p>
+                    <p className="text-sm text-muted-foreground">{t('projects.noContentBlocks')}</p>
                   )}
                 </div>
 
                 {/* Adicionar Novo Bloco de Texto */}
                 <div className="space-y-2 border-t pt-4">
-                  <Label htmlFor="new-text-block">Adicionar Novo Bloco de Texto</Label>
+                  <Label htmlFor="new-text-block">{t('projects.addTextBlock')}</Label>
                   <Textarea
                     id="new-text-block"
-                    placeholder="Adicione um parágrafo, etapa do processo, etc."
+                    placeholder={t('projects.addTextBlockPlaceholder')}
                     value={currentEditTextBlock}
                     onChange={(e) => setCurrentEditTextBlock(e.target.value)}
                     rows={3}
@@ -576,13 +579,13 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
                     onClick={addTextBlockToContentBlocks}
                     disabled={!currentEditTextBlock.trim()}
                   >
-                    <Plus className="h-4 w-4 mr-2" /> Adicionar Texto
+                    <Plus className="h-4 w-4 mr-2" /> {t('projects.addText')}
                   </Button>
                 </div>
 
                 {/* Adicionar Nova Imagem */}
                 <div className="space-y-2 border-t pt-4">
-                  <Label htmlFor="new-image-block">Adicionar Nova Imagem</Label>
+                  <Label htmlFor="new-image-block">{t('projects.addImage')}</Label>
                   <Input
                     id="image-upload-content-block"
                     type="file"
@@ -595,7 +598,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
                     variant="outline"
                     onClick={() => contentBlockImageInputRef.current?.click()}
                   >
-                    <Upload className="h-4 w-4 inline-block mr-2" /> Carregar Imagem
+                    <Upload className="h-4 w-4 inline-block mr-2" /> {t('projects.uploadImage')}
                   </Button>
                 </div>
               </div>
@@ -603,7 +606,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
               {/* Role and Duration */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="role">Sua Função</Label>
+                  <Label htmlFor="role">{t('projects.role')}</Label>
                   <Input
                     id="role"
                     value={newProjectData.role}
@@ -613,12 +616,12 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
                         role: e.target.value,
                       }))
                     }
-                    placeholder="Ex: UI/UX Designer"
+                    placeholder={t('projects.rolePlaceholder')}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="duration">Duração</Label>
+                  <Label htmlFor="duration">{t('projects.duration')}</Label>
                   <Input
                     id="duration"
                     value={newProjectData.duration}
@@ -628,7 +631,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
                         duration: e.target.value,
                       }))
                     }
-                    placeholder="Ex: 3 meses, 1 ano"
+                    placeholder={t('projects.durationPlaceholder')}
                   />
                 </div>
               </div>
@@ -636,13 +639,13 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
 
             <DialogFooter>
               <Button variant="outline" onClick={closeModal}>
-                Cancelar
+                {t('projects.cancel')}
               </Button>
               <Button
                 onClick={saveProject}
                 disabled={!newProjectData.title.trim()}
               >
-                Salvar Projeto
+                {t('projects.saveProject')}
               </Button>
             </DialogFooter>
           </DialogContent>

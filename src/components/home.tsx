@@ -5,10 +5,19 @@ import AboutSection from "./AboutSection";
 import ProjectShowcase from "./ProjectShowcase";
 import ExperienceSection from "./ExperienceSection";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 import { supabase } from "../lib/supabaseClient";
+import { Button } from "./ui/button";
+import { Globe } from "lucide-react";
 
 const Home = () => {
   const { user } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
+  
+  const toggleLanguage = () => {
+    setLanguage(language === 'pt' ? 'en' : 'pt');
+  };
+  
   return (
     <div className="min-h-screen bg-background">
       {/* Header with Navigation */}
@@ -19,13 +28,13 @@ const Home = () => {
               href="#about"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Sobre
+              {t('nav.about')}
             </a>
             <a
               href="#projects"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Projetos
+              {t('nav.projects')}
             </a>
           </nav>
           <div className="flex items-center gap-4">
@@ -47,6 +56,16 @@ const Home = () => {
                 <line x1="4" x2="20" y1="18" y2="18" />
               </svg>
             </button>
+            {/* Botão de alternância de idioma */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleLanguage}
+              className="flex items-center gap-2"
+            >
+              <Globe className="h-4 w-4" />
+              <span className="uppercase">{language === 'pt' ? 'EN' : 'PT'}</span>
+            </Button>
             {/* Botão de logout só aparece se estiver logado */}
             {user && (
               <button
@@ -56,7 +75,7 @@ const Home = () => {
                 }}
                 className="ml-2 px-4 py-2 rounded bg-primary text-primary-foreground hover:bg-primary/80 transition-colors text-sm font-medium"
               >
-                Sair
+                {t('nav.logout')}
               </button>
             )}
           </div>
@@ -76,10 +95,10 @@ const Home = () => {
             className="h-20 w-auto mb-4"
           />
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
-            Leo Ferrari
+            {t('home.title')}
           </h1>
           <p className="text-xl md:text-5xl text-muted-foreground max-w-[700px] mb-8">
-            Product Designer Sênior
+            {t('home.subtitle')}
             </p>
             {/* <p className="text-xl md:text-2xl text-muted-foreground max-w-[700px] mb-8">
             ncional e inovador.
@@ -125,7 +144,7 @@ const Home = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl font-bold tracking-tight mb-8">
-              Projetos
+              {t('home.projects')}
             </h2>
             <ProjectShowcase />
           </motion.div>
@@ -142,7 +161,7 @@ const Home = () => {
               className="h-8 w-auto"
             />
             <span className="text-sm font-medium">
-              © 2024 Leonardo Ferrari. Todos os direitos reservados.
+              {t('footer.rights')}
             </span>
           </div>
           <div className="flex gap-4">

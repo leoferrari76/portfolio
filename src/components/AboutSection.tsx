@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useLanguage } from "../context/LanguageContext";
 
 interface AboutSectionProps {
   name?: string;
@@ -16,7 +17,7 @@ interface AboutSectionProps {
 const AboutSection = ({
   name = "Leonardo Ferrari",
   title = "UX Designer Sênior | Estratégia, operação e execução ponta-a-ponta",
-  bio = "Sou designer com mais de 10 anos de experiência em UX, atuando de ponta a ponta nos projetos, desde a imersão com stakeholders até a entrega de soluções testadas, validadas e prontas para escalar.",
+  bio,
   skills = [
     "Figma",
     "FigJam",
@@ -34,6 +35,7 @@ const AboutSection = ({
   phone = "(19) 99128-6811",
   location = "Campinas – SP",
 }: AboutSectionProps) => {
+  const { t } = useLanguage();
   return (
     <section className="w-full md:py-24 bg-background py-0">
       <div className="container px-4 md:px-6">
@@ -52,24 +54,21 @@ const AboutSection = ({
           {/* Bio Content */}
           <div className="w-full md:w-1/2 space-y-6">
             <div className="space-y-4">
-              <h2 className="text-2xl font-semibold">Sobre mim</h2>
-              <p className="text-muted-foreground leading-relaxed">{bio}</p>
+              <h2 className="text-2xl font-semibold">{t('about.title')}</h2>
+              <p className="text-muted-foreground leading-relaxed">{t('about.bio1')}</p>
               <p className="text-muted-foreground leading-relaxed">
-              Tenho facilidade em traduzir contextos complexos em produtos claros, objetivos e centrados no usuário. Já atuei em segmentos como finanças, saúde, indústria farmacêutica, agronegócio e educação, sempre com foco em clareza de processos, conexão com o negócio e entrega de valor real.
+                {t('about.bio2')}
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Hoje, além de atuar no desenvolvimento de produtos digitais, também colaboro com o time comercial em projetos de pré-venda, ajudando a construir propostas que mostram, de forma estratégica, como o design pode gerar impacto desde o início dos projetos.
+                {t('about.bio3')}
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Me destaco por facilitar decisões, organizar fluxos e formar
-                designers com visão de produto. Tenho investigado como IA e
-                ferramentas no-code podem potencializar o trabalho de designers
-                e acelerar a entrega de valor em produtos digitais.
+                {t('about.bio4')}
               </p>
             </div>
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold">
-                Ferramentas & Expertise
+                {t('about.tools')}
               </h2>
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill, index) => (
