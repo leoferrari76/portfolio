@@ -85,25 +85,24 @@ const experiences = [
 
 const ExperienceSection: React.FC = () => {
   const { t } = useLanguage();
-  
+
   return (
-    <section id="experience" className="py-12">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold tracking-tight mb-8">{t('experience.title')}</h2>
-        <div className="flex flex-wrap gap-12 justify-center items-center">
-          {experiences.map((exp, idx) => (
-            <div key={idx} className="flex flex-col items-center group">
-              <img
-                src={exp.logo}
-                alt={exp.company}
-                className="h-12 w-auto transition duration-300 mb-2"
-                title={exp.company}
-              />
-              <span className="text-xs text-muted-foreground font-medium text-center">{exp.period}</span>
-              <span className="text-xs text-muted-foreground text-center">{exp.role}</span>
-            </div>
-          ))}
-        </div>
+    <section id="experience">
+      <h2 className="section-heading text-2xl font-semibold tracking-tight mb-12">
+        {t('experience.title')}
+      </h2>
+      <div className="flex flex-wrap gap-x-14 gap-y-10 items-center">
+        {experiences.map((exp, idx) => (
+          <div key={idx} className="flex flex-col items-start gap-1.5">
+            <img
+              src={exp.logo}
+              alt={exp.company}
+              className="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity duration-200"
+              title={exp.company}
+            />
+            <span className="text-xs text-muted-foreground tabular-nums">{exp.period}</span>
+          </div>
+        ))}
       </div>
     </section>
   );

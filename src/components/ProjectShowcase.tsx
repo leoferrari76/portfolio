@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
-import 'react-quill/dist/quill.snow.css'; // Importa os estilos do Quill
+import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
-import parse from 'html-react-parser'; // Importa a biblioteca para parsear HTML
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -22,25 +13,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  ChevronRight,
   Plus,
   Trash2,
-  ExternalLink,
-  X,
   Upload,
-  Image as ImageIcon,
-  User,
-  Clock,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
@@ -65,7 +42,7 @@ interface ProjectShowcaseProps {
 }
 
 const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
-  const [expandedProject, setExpandedProject] = useState<string | null>(null);
+
   const [projectsList, setProjectsList] = useState<Project[]>([]); // Lista exibida na tela
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newProjectData, setNewProjectData] = useState<Omit<Project, 'id'> & { tempImageFile: File | null }>({ // Adiciona tempImageFile para o upload da imagem principal do card
@@ -206,10 +183,6 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
     
     fetchProjects();
   }, [language]);
-
-  const toggleProjectExpansion = (projectId: string) => {
-    setExpandedProject(expandedProject === projectId ? null : projectId);
-  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -396,53 +369,44 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
           </div>
         )}
 
-        <div className="space-y-12">
+        <div>
           {projectsList.length === 0 ? (
-            <p className="text-center text-muted-foreground">{t('projects.noProjects')}</p>
+            <p className="text-sm text-muted-foreground">{t('projects.noProjects')}</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
               {projectsList.map((project) => {
                 const mainImage = (project as any).imageUrl || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&q=80";
                 return (
-                  <Card
+                  <div
                     key={project.id}
-                    className="rounded-none bg-white flex flex-col overflow-hidden cursor-pointer border-0"
+                    className="group cursor-pointer"
                     onClick={() => navigate(`/project/${project.id}`)}
                   >
-                    {mainImage && (
+                    <div className="overflow-hidden mb-4">
                       <img
                         src={mainImage}
                         alt={project.title}
-                        className="w-full h-48 object-cover rounded-t-none"
+                        className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                       />
-                    )}
-                    <div className="p-6 flex flex-col flex-1">
-                      <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                      <div className="flex flex-wrap gap-2 mb-2">
+                    </div>
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <h3 className="text-base font-semibold leading-snug mb-1 group-hover:text-primary transition-colors">
+                          {project.title}
+                        </h3>
                         {project.role && (
-                          <Badge variant="secondary" className="text-xs font-medium bg-blue-100 text-blue-800">
+                          <span className="text-xs text-muted-foreground uppercase tracking-wider">
                             {project.role}
-                          </Badge>
-                        )}
-                        {project.duration && (
-                          <Badge variant="secondary" className="text-xs font-medium bg-green-100 text-green-800">
-                            {project.duration}
-                          </Badge>
+                          </span>
                         )}
                       </div>
-                      <div className="text-muted-foreground text-sm flex-1 line-clamp-3 mb-4" dangerouslySetInnerHTML={{ __html: project.description }} />
-                      <Button
-                        variant="outline"
-                        className="mt-auto"
-                        onClick={e => {
-                          e.stopPropagation();
-                          navigate(`/project/${project.id}`);
-                        }}
-                      >
-                        {t('projects.viewDetails')}
-                      </Button>
+                      {project.duration && (
+                        <span className="text-xs text-muted-foreground shrink-0 tabular-nums mt-0.5">
+                          {project.duration}
+                        </span>
+                      )}
                     </div>
-                  </Card>
+                  </div>
                 );
               })}
             </div>
