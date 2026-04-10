@@ -4,8 +4,6 @@ interface AboutSectionProps {
   name?: string;
   skills?: string[];
   speakerImage?: string;
-  contactEmail?: string;
-  phone?: string;
   location?: string;
 }
 
@@ -24,8 +22,6 @@ const AboutSection = ({
     "IA aplicada ao Design",
   ],
   speakerImage = "/leoferrari.png",
-  contactEmail = "leoferrari@gmail.com",
-  phone = "(19) 99128-6811",
   location = "Campinas – SP",
 }: AboutSectionProps) => {
   const { t } = useLanguage();
@@ -73,10 +69,22 @@ const AboutSection = ({
             </div>
           </div>
 
-          <div className="pt-2 space-y-1 text-sm text-muted-foreground">
-            <p>{contactEmail}</p>
-            <p>{phone}</p>
-            <p>{location}</p>
+          <div className="pt-2 flex items-center gap-3 text-sm text-muted-foreground">
+            <a
+              href="https://www.linkedin.com/in/leonardomoraesferrari/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-foreground transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect width="4" height="12" x="2" y="9" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+              LinkedIn
+            </a>
+            <span>·</span>
+            <span>{location}</span>
           </div>
         </div>
       </div>
