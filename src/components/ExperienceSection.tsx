@@ -10,15 +10,6 @@ const logos: Record<string, string> = {
   "LF Design": "/lf.png",
 };
 
-const schools = [
-  { name: "IxDF", label: "Interaction Design Foundation" },
-  { name: "TERA", label: "TERA" },
-  { name: "PM3", label: "PM3" },
-  { name: "Caroli.org", label: "Caroli.org" },
-  { name: "Produtos para Humanos", label: "Produtos para Humanos" },
-  { name: "CFPRO", label: "CFPRO" },
-  { name: "UX Change Academy", label: "UX Change Academy" },
-];
 
 const ExperienceSection: React.FC = () => {
   const { t, language } = useLanguage();
@@ -80,34 +71,6 @@ const ExperienceSection: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* ─ Education ─ */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.6 }}
-      >
-        <p className="section-label mb-8">
-          {language === "pt" ? "Formação complementar" : "Continuing education"}
-        </p>
-
-        <div className="flex flex-wrap gap-x-8 gap-y-4 items-center">
-          {schools.map((school, i) => (
-            <motion.span
-              key={i}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="font-ui text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-default"
-              title={school.label}
-            >
-              {school.name}
-            </motion.span>
-          ))}
-        </div>
-      </motion.div>
 
     </section>
   );

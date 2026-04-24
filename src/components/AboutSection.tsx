@@ -1,6 +1,16 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext";
 
+const schools = [
+  "IxDF",
+  "TERA",
+  "PM3",
+  "Caroli.org",
+  "Produtos para Humanos",
+  "CFPRO",
+  "UX Change Academy",
+];
+
 const skills = [
   "Figma",
   "FigJam",
@@ -84,6 +94,27 @@ const AboutSection = () => {
                   className="px-3 py-1.5 border border-border text-xs font-light text-foreground/70 hover:border-primary/50 hover:text-foreground transition-colors duration-200"
                 >
                   {skill}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <p className="section-label mb-4">
+              {language === "pt" ? "Formação complementar" : "Continuing education"}
+            </p>
+            <div className="flex flex-wrap gap-x-6 gap-y-2">
+              {schools.map((school, i) => (
+                <span
+                  key={i}
+                  className="font-ui text-xs text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-default"
+                >
+                  {school}
                 </span>
               ))}
             </div>
