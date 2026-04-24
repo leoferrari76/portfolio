@@ -10,46 +10,53 @@ const logos: Record<string, string> = {
   "LF Design": "/lf.png",
 };
 
+const schools = [
+  { name: "IxDF", label: "Interaction Design Foundation" },
+  { name: "TERA", label: "TERA" },
+  { name: "PM3", label: "PM3" },
+  { name: "Caroli.org", label: "Caroli.org" },
+  { name: "Produtos para Humanos", label: "Produtos para Humanos" },
+  { name: "CFPRO", label: "CFPRO" },
+  { name: "UX Change Academy", label: "UX Change Academy" },
+];
+
 const ExperienceSection: React.FC = () => {
   const { t, language } = useLanguage();
   const entries = translations[language].experience.entries;
 
   return (
-    <section id="experience">
-      <h2 className="section-heading font-display text-2xl font-light tracking-tight mb-14">
-        {t("experience.title")}
-      </h2>
+    <section id="experience" className="space-y-20">
 
-      <div className="relative">
-        {/* Vertical amber line */}
-        <div className="absolute left-[7.5rem] md:left-[10.5rem] top-3 bottom-0 w-px bg-gradient-to-b from-primary/50 via-primary/20 to-transparent hidden sm:block" />
+      {/* ─ Timeline ─ */}
+      <div>
+        <h2 className="section-heading font-display text-2xl font-light tracking-tight mb-14">
+          {t("experience.title")}
+        </h2>
 
-        <div className="space-y-0">
-          {entries.map((entry: { company: string; role: string; period: string; description: string }, idx: number) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: -12 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: idx * 0.08 }}
-              className="group relative flex flex-col sm:flex-row gap-4 sm:gap-0 py-8 border-b border-border/40 last:border-0"
-            >
-              {/* Period — left column */}
-              <div className="flex-shrink-0 sm:w-[7.5rem] md:w-[10.5rem]">
-                <span className="font-ui text-xs text-muted-foreground/70 tracking-wide tabular-nums">
-                  {entry.period}
-                </span>
-              </div>
+        <div className="relative">
+          <div className="absolute left-[7.5rem] md:left-[10.5rem] top-3 bottom-0 w-px bg-gradient-to-b from-primary/50 via-primary/20 to-transparent hidden sm:block" />
 
-              {/* Dot on the line */}
-              <div className="absolute left-[7.5rem] md:left-[10.5rem] top-[2.65rem] -translate-x-[0.3rem] hidden sm:block">
-                <div className="w-[7px] h-[7px] rounded-full bg-primary ring-2 ring-background group-hover:scale-125 transition-transform duration-200" />
-              </div>
+          <div className="space-y-0">
+            {entries.map((entry: { company: string; role: string; period: string; description: string }, idx: number) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                className="group relative flex flex-col sm:flex-row gap-4 sm:gap-0 py-8 border-b border-border/40 last:border-0"
+              >
+                <div className="flex-shrink-0 sm:w-[7.5rem] md:w-[10.5rem]">
+                  <span className="font-ui text-xs text-muted-foreground/70 tracking-wide tabular-nums">
+                    {entry.period}
+                  </span>
+                </div>
 
-              {/* Content — right column */}
-              <div className="sm:pl-10 md:pl-12 flex-1 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-8">
-                <div className="flex-1">
-                  {/* Company logo */}
+                <div className="absolute left-[7.5rem] md:left-[10.5rem] top-[2.65rem] -translate-x-[0.3rem] hidden sm:block">
+                  <div className="w-[7px] h-[7px] rounded-full bg-primary ring-2 ring-background group-hover:scale-125 transition-transform duration-200" />
+                </div>
+
+                <div className="sm:pl-10 md:pl-12 flex-1">
                   <div className="mb-2">
                     {logos[entry.company] ? (
                       <img
@@ -58,27 +65,50 @@ const ExperienceSection: React.FC = () => {
                         className="h-6 w-auto opacity-60 group-hover:opacity-90 transition-opacity duration-200"
                       />
                     ) : (
-                      <span className="font-ui text-sm font-semibold tracking-wide">
-                        {entry.company}
-                      </span>
+                      <span className="font-ui text-sm font-semibold tracking-wide">{entry.company}</span>
                     )}
                   </div>
-
-                  {/* Role */}
                   <p className="font-ui text-xs tracking-[0.1em] uppercase text-primary/80 mb-2">
                     {entry.role}
                   </p>
-
-                  {/* Description */}
                   <p className="text-sm text-muted-foreground leading-relaxed max-w-lg">
                     {entry.description}
                   </p>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* ─ Education ─ */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.6 }}
+      >
+        <p className="section-label mb-8">
+          {language === "pt" ? "Formação complementar" : "Continuing education"}
+        </p>
+
+        <div className="flex flex-wrap gap-x-8 gap-y-4 items-center">
+          {schools.map((school, i) => (
+            <motion.span
+              key={i}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              className="font-ui text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-default"
+              title={school.label}
+            >
+              {school.name}
+            </motion.span>
+          ))}
+        </div>
+      </motion.div>
+
     </section>
   );
 };
