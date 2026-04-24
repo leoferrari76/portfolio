@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
 
@@ -379,11 +380,14 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
               {projectsList.map((project, i) => {
                 const mainImage = (project as any).imageUrl || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80";
                 return (
-                  <div
+                  <motion.div
                     key={project.id}
                     className="group cursor-pointer"
                     onClick={() => navigate(`/project/${project.id}`)}
-                    style={{ animationDelay: `${i * 0.07}s` }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.5, delay: (i % 2) * 0.12 }}
                   >
                     {/* Image container */}
                     <div className="relative overflow-hidden mb-5 bg-secondary/50">
@@ -405,9 +409,9 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
                           {project.title}
                         </h3>
                         {project.description && (
-                          <p className="text-sm text-muted-foreground font-light leading-relaxed line-clamp-2 mb-2">
-                            {project.description}
-                          </p>
+                          <p className="text-sm text-muted-foreground font-light leading-relaxed line-clamp-2 mb-2"
+                            dangerouslySetInnerHTML={{ __html: project.description }}
+                          />
                         )}
                         {project.role && (
                           <span className="font-ui text-[0.65rem] tracking-[0.14em] uppercase text-primary/70">
@@ -421,7 +425,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
                         </span>
                       )}
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
