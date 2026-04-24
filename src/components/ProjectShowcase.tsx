@@ -355,15 +355,17 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
   };
 
   return (
-    <section className="w-full py-12 bg-background" id="projects">
-      <div className="container mx-auto px-4">
+    <section className="w-full" id="projects">
+      <div>
         {user && (
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-start mb-10">
             <Button
               onClick={openModal}
-              className="flex items-center gap-2"
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2 font-ui text-xs tracking-wide"
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-3.5 w-3.5" />
               {t('projects.addProject')}
             </Button>
           </div>
@@ -371,37 +373,50 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
 
         <div>
           {projectsList.length === 0 ? (
-            <p className="text-sm text-muted-foreground">{t('projects.noProjects')}</p>
+            <p className="text-sm text-muted-foreground italic font-display">{t('projects.noProjects')}</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
-              {projectsList.map((project) => {
-                const mainImage = (project as any).imageUrl || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&q=80";
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14">
+              {projectsList.map((project, i) => {
+                const mainImage = (project as any).imageUrl || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80";
                 return (
                   <div
                     key={project.id}
                     className="group cursor-pointer"
                     onClick={() => navigate(`/project/${project.id}`)}
+                    style={{ animationDelay: `${i * 0.07}s` }}
                   >
-                    <div className="overflow-hidden mb-4">
+                    {/* Image container */}
+                    <div className="relative overflow-hidden mb-5 bg-secondary/50">
                       <img
                         src={mainImage}
                         alt={project.title}
-                        className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        className="w-full aspect-[16/10] object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                       />
+                      {/* Amber overlay on hover */}
+                      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      {/* Bottom amber line */}
+                      <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-primary group-hover:w-full transition-all duration-500 ease-out" />
                     </div>
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <h3 className="text-base font-semibold leading-snug mb-1 group-hover:text-primary transition-colors">
+
+                    {/* Card info */}
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-display text-xl font-light leading-snug mb-1.5 group-hover:text-primary transition-colors duration-200">
                           {project.title}
                         </h3>
+                        {project.description && (
+                          <p className="text-sm text-muted-foreground font-light leading-relaxed line-clamp-2 mb-2">
+                            {project.description}
+                          </p>
+                        )}
                         {project.role && (
-                          <span className="text-xs text-muted-foreground uppercase tracking-wider">
+                          <span className="font-ui text-[0.65rem] tracking-[0.14em] uppercase text-primary/70">
                             {project.role}
                           </span>
                         )}
                       </div>
                       {project.duration && (
-                        <span className="text-xs text-muted-foreground shrink-0 tabular-nums mt-0.5">
+                        <span className="font-ui text-xs text-muted-foreground/60 shrink-0 tabular-nums mt-0.5">
                           {project.duration}
                         </span>
                       )}

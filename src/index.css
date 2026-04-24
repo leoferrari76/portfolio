@@ -1,83 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Syne:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Trace paper + precision */
-    --background: 36 20% 97%;       /* #F9F7F4 — trace paper */
-    --foreground: 30 7% 16%;        /* #2A2825 — graphite */
+    --background: 40 28% 97%;
+    --foreground: 220 18% 12%;
 
-    --card: 36 15% 99%;             /* #FDFCFB — card surface */
-    --card-foreground: 30 7% 16%;
+    --card: 40 20% 99%;
+    --card-foreground: 220 18% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 30 7% 16%;
+    --popover-foreground: 220 18% 12%;
 
-    --primary: 38 91% 55%;          /* #F5A623 — amber mark */
-    --primary-foreground: 30 7% 10%;
+    --primary: 38 91% 52%;
+    --primary-foreground: 220 18% 10%;
 
-    --secondary: 36 12% 93%;        /* warm light gray */
-    --secondary-foreground: 30 7% 25%;
+    --secondary: 40 14% 93%;
+    --secondary-foreground: 220 18% 25%;
 
-    --muted: 36 12% 93%;
-    --muted-foreground: 30 5% 52%;  /* #8C8880 — annotation gray */
+    --muted: 40 14% 93%;
+    --muted-foreground: 220 8% 50%;
 
-    --accent: 38 91% 55%;
-    --accent-foreground: 30 7% 10%;
+    --accent: 38 91% 52%;
+    --accent-foreground: 220 18% 10%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 36 20% 97%;
+    --destructive-foreground: 40 28% 97%;
 
-    --border: 36 10% 88%;           /* warm whisper border */
-    --input: 36 10% 88%;
-    --ring: 38 91% 55%;
+    --border: 40 12% 88%;
+    --input: 40 12% 88%;
+    --ring: 38 91% 52%;
 
-    --radius: 0.25rem;              /* sharp, precise */
+    --radius: 0.2rem;
   }
 
   .dark {
-    --background: 30 7% 10%;
-    --foreground: 36 20% 93%;
+    --background: 220 18% 8%;
+    --foreground: 40 20% 93%;
 
-    --card: 30 7% 13%;
-    --card-foreground: 36 20% 93%;
+    --card: 220 18% 11%;
+    --card-foreground: 40 20% 93%;
 
-    --popover: 30 7% 13%;
-    --popover-foreground: 36 20% 93%;
+    --popover: 220 18% 11%;
+    --popover-foreground: 40 20% 93%;
 
-    --primary: 38 91% 55%;
-    --primary-foreground: 30 7% 10%;
+    --primary: 38 91% 52%;
+    --primary-foreground: 220 18% 8%;
 
-    --secondary: 30 7% 18%;
-    --secondary-foreground: 36 20% 80%;
+    --secondary: 220 18% 16%;
+    --secondary-foreground: 40 20% 80%;
 
-    --muted: 30 7% 18%;
-    --muted-foreground: 30 5% 55%;
+    --muted: 220 18% 16%;
+    --muted-foreground: 220 8% 55%;
 
-    --accent: 30 7% 18%;
-    --accent-foreground: 36 20% 93%;
+    --accent: 220 18% 16%;
+    --accent-foreground: 40 20% 93%;
 
     --destructive: 0 62.8% 40%;
-    --destructive-foreground: 36 20% 93%;
+    --destructive-foreground: 40 20% 93%;
 
-    --border: 30 7% 22%;
-    --input: 30 7% 22%;
-    --ring: 38 91% 55%;
+    --border: 220 18% 20%;
+    --input: 220 18% 20%;
+    --ring: 38 91% 52%;
   }
 }
 
 @layer base {
+  * {
+    @apply border-border;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3 {
     font-feature-settings: "kern" 1, "liga" 1;
   }
 }
 
 @layer components {
-  /* Signature: amber precision mark — ruler edge on section headings */
+  .font-display {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+  }
+
+  .font-ui {
+    font-family: 'Syne', sans-serif;
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+  }
+
   .section-heading {
     padding-left: 0.875rem;
     border-left: 2px solid hsl(var(--primary));
+  }
+
+  .amber-dot::after {
+    content: '.';
+    color: hsl(var(--primary));
+  }
+
+  .timeline-line {
+    position: relative;
+  }
+
+  .timeline-line::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1.25rem;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, hsl(var(--primary)), transparent);
   }
 }
