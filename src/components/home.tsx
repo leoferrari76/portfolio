@@ -257,19 +257,13 @@ const Home = () => {
               </p>
               <div className="flex flex-wrap items-center gap-4">
                 <a
-                  href="mailto:leoferrari@gmail.com"
-                  className="inline-flex items-center gap-2.5 text-sm font-medium text-background bg-foreground px-6 py-3 hover:bg-primary hover:text-foreground transition-all duration-300"
-                >
-                  leoferrari@gmail.com
-                  <span>→</span>
-                </a>
-                <a
                   href="https://www.linkedin.com/in/leonardomoraesferrari/"
                   target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  className="inline-flex items-center gap-2.5 text-sm font-medium text-background bg-foreground px-6 py-3 hover:bg-primary hover:text-foreground transition-all duration-300 group"
                 >
                   <LinkedInIcon />
                   LinkedIn
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                 </a>
               </div>
             </div>
