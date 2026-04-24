@@ -115,6 +115,56 @@
     color: hsl(var(--primary));
   }
 
+  /* Rich text content from project detail pages */
+  .project-content h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: hsl(var(--foreground));
+    padding-left: 0.875rem;
+    border-left: 2px solid hsl(var(--primary));
+    margin-bottom: 1rem;
+    line-height: 1.4;
+  }
+
+  .project-content h3 b,
+  .project-content h3 strong {
+    font-weight: 400;
+  }
+
+  .project-content p {
+    font-size: 0.9375rem;
+    font-weight: 300;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.85;
+    margin-bottom: 0.6rem;
+  }
+
+  .project-content p:empty,
+  .project-content p:has(> br:only-child) {
+    display: none;
+  }
+
+  .project-content ul,
+  .project-content ol {
+    padding-left: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-content li {
+    font-size: 0.9375rem;
+    font-weight: 300;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.8;
+    margin-bottom: 0.25rem;
+  }
+
+  .project-content a {
+    color: hsl(var(--primary));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
   .timeline-line {
     position: relative;
   }
